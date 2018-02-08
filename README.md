@@ -12,8 +12,8 @@ This example shows how csrf attack works and how to mitigate it
   - attacker: `:5000`
   - victim: `:5100`
   
-  if your os is osx and using nginx, put following setting into your nginx.conf 
-  (check your nginx installed path by `(sudo) nginx -t`
+  if your os is osx and using nginx, put following setting into your nginx.conf\
+  (check your nginx installed path by `(sudo) nginx -t`
 
 ```
 upstream csrf-victim_upstream {
@@ -41,8 +41,6 @@ server {
     proxy_set_header   X-NginX-Proxy    true;
     proxy_set_header   Connection "";
     proxy_http_version 1.1;
-    # proxy_cache one;
-    # proxy_cache_key sfs$request_uri$scheme;
     proxy_pass         http://csrf-victim_upstream;
   }
 }
@@ -63,8 +61,6 @@ server {
     proxy_set_header   X-NginX-Proxy    true;
     proxy_set_header   Connection "";
     proxy_http_version 1.1;
-    # proxy_cache one;
-    # proxy_cache_key sfs$request_uri$scheme;
     proxy_pass         http://csrf-attacker_upstream;
   }
 }
