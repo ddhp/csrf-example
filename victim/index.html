@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <style type="text/css">
+      .my-iframe {
+        width: 100%;
+        height: 1000px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.min.js"></script>
+  </head>
+  <body>
+    <button id="login-button">Login</button>
+    <button id="ajax-button">POST to /api/protected</button>
+
+    <script type="text/javascript">
+      function submit() {
+        var token = Math.random(); 
+        Cookies.set('xsrftoken', token);
+
+        superagent
+          .post('/api/protected')
+          .set('X-XSRF-TOKEN', token)
+          .then(function(res) {
+            console.log(res);
+          }, function(err) {
+            console.log(err);
+          });
+      }
+
+      function login () {
+        superagent
+          .get('/api/set-session')
+          .then(function(res) {
+            console.log('logged in');
+          })
+      }
+      document.querySelector('#ajax-button').addEventListener('click', submit);
+      document.querySelector('#login-button').addEventListener('click', login);
+    </script>
+  </body>
+</html>
